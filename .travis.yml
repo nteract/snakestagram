@@ -3,8 +3,20 @@ language: python
 notifications:
   email: false
 
-install: source travis/install.sh
+matrix:
+  include:
+    - os: linux
+      install: source linux/install.sh
 
-script:
-  - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipykernel
-  - tar czf /tmp/snakestagram.tar.gz /tmp/snakestagram
+      script:
+        - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipykernel
+        - tar czf /tmp/snakestagram.tar.gz /tmp/snakestagram
+
+    - os: osx
+      language: generic
+      osx_image: xcode7.3
+      install: source osx/install.sh
+
+      script:
+        - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipykernel
+        - tar czf /tmp/snakestagram.tar.gz /tmp/snakestagram
