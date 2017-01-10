@@ -1,0 +1,10 @@
+language: python
+
+notifications:
+  email: false
+
+install: source travis/install.sh
+
+script:
+  - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipykernel
+  - tar czf /tmp/snakestagram.tar.gz /tmp/snakestagram
