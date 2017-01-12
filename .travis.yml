@@ -5,18 +5,38 @@ notifications:
 
 matrix:
   include:
-    - os: linux
-      install: source linux/install.sh
+  - os: linux
+    install: source linux/install.sh
+    script:
+    - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn
+      ipykernel
+    - echo $VERSION
+    - export FOO=/tmp/snakestagram-v$VERSION-linux-x64.tar.gz
+    - tar czf $FOO /tmp/snakestagram
 
-      script:
-        - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipykernel
-        - tar czf /tmp/snakestagram.tar.gz /tmp/snakestagram
+  - os: osx
+    language: generic
+    osx_image: xcode7.3
+    install: source osx/install.sh
+    script:
+    - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn
+      ipykernel
+    - "tar czf /tmp/snakestagram-v${VERSION}-darwin-x64.tar.gz /tmp/snakestagram"
 
-    - os: osx
-      language: generic
-      osx_image: xcode7.3
-      install: source osx/install.sh
+before_script:
+  - export VERSION=${TRAVIS_TAG:-$TRAVIS_COMMIT}
+  - echo "Tagging with $VERSION"
 
-      script:
-        - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipykernel
-        - tar czf /tmp/snakestagram.tar.gz /tmp/snakestagram
+before_deploy:
+  - export RELEASE_FILES=$(ls snakestagram-*.tar.gz)
+  - echo "Uploading $RELEASE_FILES to GitHub releases for tag: $VERSION"
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  file_glob: true
+  api_key:
+    secure: ZhSRBf3tg7e9Csx389VAdX5BzeKWH/P0ugYoBeoEraVFhcGUfgAOHo4I9tCt8S8AlJfq8r5tCoIkIPiqfVEsyfXNW0XCH5jM6HFBysbOUcCOZ31EDppsx6j1DaBxC7D9GirU+1/1df3p8nrzTBzbVuLKs1n7FHY+I4h6/CjeI/gr4gztMmwuWzL48zG4peqVXmM0PYPcWlKpt+YmG2uy6sbBbj9ibbxRSsJoksbYbitQN1/yP7n5J1tfyQny6uTWBanIXSlkntjol4nHOh5m0rAwHhGxNEERYiTz6slOLbfMJJb+W33ytYa0nUZJVbNxtWDvyNqp9VvNpyXbd6yxhUeOHw32sVjz1LQN96o5oQkg0Efg5EejKErFhtPsRMJanI36FANdkaPJdijFffuuuNeHIcyl0m5dR746ymFuqoLQIKEfG12SSVOahBzvYRIESeaJfLKyO1Vp7P6PHaf2eNtL8ZMyN5+51jDfZlCsE9FdDtIJYYk7jxanGSl3w+2LUfPLucHTvlVa8rxdpxrW3GCDXtKhpu2bVC61ZgJj/uoeelTIeMFL2EIot2Z6odGjE8nQ/kA3xF2X3JcAsnTsztJwZzfzQVG6Ab4EARy+26ve17o5pDF+0vOD2RrmwUjR+E0/Wv2gqNq8TzmVUH3uH6/Hhv1xgn+PcUg6kKtU0Xs=
+  file: ${RELEASE_FILES}
+  on:
+    tags: true
