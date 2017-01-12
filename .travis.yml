@@ -7,21 +7,13 @@ matrix:
   include:
   - os: linux
     install: source linux/install.sh
-    script:
-    - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn
-      ipykernel
-    - echo $VERSION
-    - export FOO=/tmp/snakestagram-v$VERSION-linux-x64.tar.gz
-    - tar czf $FOO /tmp/snakestagram
+    script: source linux/build.sh
 
   - os: osx
     language: generic
     osx_image: xcode7.3
     install: source osx/install.sh
-    script:
-    - conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn
-      ipykernel
-    - "tar czf /tmp/snakestagram-v${VERSION}-darwin-x64.tar.gz /tmp/snakestagram"
+    script: source osx/build.sh
 
 before_script:
   - export VERSION=${TRAVIS_TAG:-$TRAVIS_COMMIT}
