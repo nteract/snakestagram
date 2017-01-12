@@ -7,20 +7,20 @@ matrix:
   include:
   - os: linux
     install: source linux/install.sh
-    script: source linux/build.sh
+    script: ./linux/build.sh
 
   - os: osx
     language: generic
     osx_image: xcode7.3
     install: source osx/install.sh
-    script: source osx/build.sh
+    script: ./osx/build.sh
 
 before_script:
   - export VERSION=${TRAVIS_TAG:-$TRAVIS_COMMIT}
   - echo "Tagging with $VERSION"
 
 before_deploy:
-  - export RELEASE_FILES=$(ls snakestagram-*.tar.gz)
+  - export RELEASE_FILES=$(ls /tmp/snakestagram-*.tar.gz)
   - echo "Uploading $RELEASE_FILES to GitHub releases for tag: $VERSION"
 
 deploy:
