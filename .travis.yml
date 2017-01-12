@@ -21,7 +21,7 @@ before_script:
 
 before_deploy:
   - export RELEASE_FILES=$(ls /tmp/snakestagram-*.tar.gz)
-  - echo "Uploading $RELEASE_FILES to GitHub releases for tag: $VERSION"
+  - echo "Uploading $RELEASE_FILES to GitHub releases for tag $VERSION"
 
 deploy:
   skip_cleanup: true
