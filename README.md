@@ -1,4 +1,7 @@
 # snakestagram
+
+[![Build Status](https://travis-ci.org/nteract/snakestagram.svg?branch=master)](https://travis-ci.org/nteract/snakestagram)
+
 Snake in a box, conda environments to go
 
 ## Roadmap
