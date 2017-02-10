@@ -1,0 +1,2 @@
+export CONDA_ARCH="MacOSX-x86_64"
+export PLATFORM="darwin-x64"
