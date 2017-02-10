@@ -6,14 +6,15 @@ notifications:
 matrix:
   include:
   - os: linux
-    install: source linux/install.sh
-    script: ./linux/build.sh
+    before_install: source linux/env
 
   - os: osx
     language: generic
     osx_image: xcode7.3
-    install: source osx/install.sh
-    script: ./osx/build.sh
+    before_install: source osx/env
+
+install: source unix-common/install.sh
+script: unix-common/build.sh
 
 before_script:
   - export VERSION=${TRAVIS_TAG:-$TRAVIS_COMMIT}

@@ -3,6 +3,7 @@
 # conda-based environment instead
 deactivate
 
+set -e
 # Use the miniconda installer for faster download / install of conda
 # itself
 pushd .
@@ -14,9 +15,9 @@ ls -l
 echo
 if [[ ! -f miniconda.sh ]]
    then
-   wget http://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh \
+   wget http://repo.continuum.io/miniconda/Miniconda3-latest-${CONDA_ARCH}.sh \
        -O miniconda.sh
-   fi
+fi
 chmod +x miniconda.sh && ./miniconda.sh -b
 cd ..
 export PATH="$HOME/miniconda3/bin:$PATH"

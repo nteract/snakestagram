@@ -1,0 +1,2 @@
+export CONDA_ARCH="Linux-x86_64"
+export PLATFORM="linux-x64"
