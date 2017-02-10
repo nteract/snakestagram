@@ -3,7 +3,6 @@
 # conda-based environment instead
 deactivate
 
-set -e
 # Use the miniconda installer for faster download / install of conda
 # itself
 pushd .
