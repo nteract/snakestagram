@@ -21,5 +21,6 @@ fi
 chmod +x miniconda.sh && ./miniconda.sh -b
 cd ..
 export PATH="$HOME/miniconda3/bin:$PATH"
+conda config --add channels conda-forge
 conda update --yes conda
 popd
