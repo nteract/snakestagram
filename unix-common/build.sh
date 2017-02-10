@@ -9,4 +9,5 @@ conda create -p /tmp/snakestagram --copy -y -q python=3 pandas scikit-learn ipyk
 
 cd /tmp/
 tar czf snakestagram-${VERSION}-${PLATFORM}.tar.gz ./snakestagram
+du -hs snakestagram*
 ls .
